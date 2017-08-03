@@ -1,70 +1,70 @@
 <?php
     class Users{
-        public $id = "";
-        public $username = "";
-        public $password = "";
-        public $fname = "";
-        public $lname = "";
-        public $propic = "";
-        public $email = "";
+        public static $id;
+        public static $username;
+        public static $password;
+        public static $fname;
+        public static $lname;
+        public static $propic;
+        public static $email;
 
-        public function setID($id){
-            this.$id = $id;
+        public static function setID($Id){
+            $id = $Id;
         }
 
-        public function getID(){
+        public static function getID(){
             return $id;
         }
 
-        public function setUsername($username){
-            this.$username = $username;
+        public static function setUsername($Username){
+            $username = $Username;
         }
 
-        public function getUsername(){
+        public static function getUsername(){
             return $username;
         }
 
-        public function setPassword($password){
-            this.$password = $password;
+        public static function setPassword($Password){
+            $password = $Password;
         }
 
-        public function getPassword(){
+        public static function getPassword(){
             return $password;
         }
 
-        public function setFname($fname){
-            this.$fname = $fname;
+        public static function setFname($Fname){
+            $fname = $Fname;
         }
 
-        public function getFname(){
+        public static function getFname(){
             return $fname;
         }
 
-        public function setLname($lname){
-            this.$lname = $lname;
+        public static function setLname($Lname){
+            $lname = $Lname;
         }
 
-        public function getLname(){
+        public static function getLname(){
             return $lname;
         }
 
-        public function setPropic($propic){
-            this.$propic = $propic;
+        public static function setPropic($Propic){
+            $propic = $Propic;
         }
 
-        public function getPropic(){
+        public static function getPropic(){
             return $propic;
         }
 
-        public function setEmail($email){
-            this.$email = $email;
+        public static function setEmail($Email){
+            $email = $Email;
         }
 
-        public function getEmail(){
+        public static function getEmail(){
             return $email;
         }
 
-        public function convID($id){
+        public static function convID($id){
             $convid = hash('sha256',$id);
             return $convid;
         }

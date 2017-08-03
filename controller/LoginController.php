@@ -11,12 +11,13 @@ function convPWD($pwd){
 }
 
         $user = "";
-        $uname =  mysqli_real_escape_string($conn, $_POST["uname"]);
-        $pword =  mysqli_real_escape_string($conn, $_POST["pword"]);
-        $results = mysqli_query($conn,"SELECT * FROM users WHERE username = '$uname'");
+        $uname =  $conn->escape_string($_POST["uname"]);//mysqli_real_escape_string($conn, $_POST["uname"]);
+        $pword =   $conn->escape_string($_POST["pword"]);//mysqli_real_escape_string($conn, $_POST["pword"]);
+        /*$results = mysqli_query($conn,"SELECT * FROM users WHERE username = '$uname'");*/
+        $results = $conn->query("SELECT * FROM users WHERE username = '$uname'");
         $stat = mysqli_num_rows($results);
-        if($stat == 1){
-            $user = mysqli_fetch_array($results,MYSQLI_ASSOC);
+        if($results->num_rows > 0){
+            $user = $results->fetch_assoc();//mysqli_fetch_array($results,MYSQLI_ASSOC);
             $id = $user["id"];
             $pwdresults = mysqli_query($conn,"SELECT * FROM user_pwds WHERE id = '$id'");
             $user_pwd = mysqli_fetch_array($pwdresults,MYSQLI_ASSOC);
@@ -38,7 +39,7 @@ function convPWD($pwd){
             
         }else{
             $_SESSION["status"] = null;
-            $_SESSION["message"] = "User not foound";
+            $_SESSION["message"] = "User not found";
         }
 
  

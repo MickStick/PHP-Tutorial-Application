@@ -13,7 +13,7 @@ require 'controller/MainController.php';
     
 
     <body>
-        <main id="login-view">
+        <main id="login-view">            
             <?php
             include 'login.php';
             ?> 

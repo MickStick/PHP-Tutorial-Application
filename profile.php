@@ -1,8 +1,10 @@
+<!DOCTYPE html>
 <?php
 require 'controller/MainController.php';
 $title = $_SESSION["fname"]. " " .$_SESSION["lname"];
+
 ?>
-<!DOCTYPE html>
+
 <html lang="en">
         <head>
             <?php
@@ -21,12 +23,17 @@ $title = $_SESSION["fname"]. " " .$_SESSION["lname"];
             </div>
             <div class="profile-partition" id="middle-partition">
                 <div class="ToPost-Container">
-                    <form>
-                        <textarea name="post" placeholder="What's on you mind?"></textarea>
-                        <button type="submit"><i class="material-icons">add</i></button>
+                    <form method = "POST" action="profile.php">
+                        <textarea rows="20"name="post" placeholder="What's going on in your brain right now?    "></textarea>
+                        <button name="makePost" type="submit"><i class="material-icons">add</i></button>
                     </form>
                 </div>
                 <hr>
+                <div class="Post-Container" id="postContainer" style="width: 100%; height: auto; padding: 2px 0px;">
+                    
+                </div>
+
+                
             
             </div>
             <div class="profile-partition">
