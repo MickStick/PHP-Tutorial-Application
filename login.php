@@ -5,10 +5,6 @@
     <tr><td><label for="pword">Password</label></td><td><input type="password" name="pword" placeholder="password"/></td></tr>
 </table>
 <button type="submit" id="logBtn" name="login">Login</button>  
-<?php 
-    if(!$chk){?>
-        <p> <?php echo $_SESSION["message"];?> </p><?php
-    } 
-?> 
+
 </form>
 

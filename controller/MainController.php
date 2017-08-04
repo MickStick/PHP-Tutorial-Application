@@ -3,16 +3,10 @@
     include 'model/Users.php';
     
     session_start();
-    $chk = true;
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        
         if(isset($_POST['login'])){
             require 'LoginController.php';
-            if($_SESSION["status"] != null){
-                header("location: profile.php");
-            }else{
-               $chk = false;
-            }
+            header("location: profile.php");
         }else if(isset($_POST['makePost'])){
         }
         /*if($_SERVER["REQUEST_METHOD"] == "GET"){

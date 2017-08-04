@@ -10,6 +10,7 @@ $title = $_SESSION["fname"]. " " .$_SESSION["lname"];
             <?php
             include 'partials/head.php';
             ?>        
+            <script src="public/script/fetchPerPosts.js"></script>
         </head>
     <header>
         <?php
@@ -19,7 +20,7 @@ $title = $_SESSION["fname"]. " " .$_SESSION["lname"];
     <body>
         <main id="profile-view">
             <div class="profile-partition">
-                
+                <p>Just cuz if dis empty it nah guh show</p>
             </div>
             <div class="profile-partition" id="middle-partition">
                 <div class="ToPost-Container">
@@ -39,6 +40,7 @@ $title = $_SESSION["fname"]. " " .$_SESSION["lname"];
             <div class="profile-partition">
                 <img src="<?php echo $_SESSION["propic"];?>" alt="Profile Face" id="UserProPic">
                 <label id="UserName"><?php echo $_SESSION["fname"]. " " .$_SESSION["lname"]; ?></label>
+                <a id="logout" href="#">Logout</a>
             </div>
             
            <!-- <h1><?php echo $_SESSION["lname"];?>'s username is <?php echo $_SESSION["username"];?></h1>

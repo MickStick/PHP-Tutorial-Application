@@ -32,6 +32,8 @@ function convPWD($pwd){
                 $_SESSION["lname"] = $user["lname"];
                 $_SESSION["email"] = $user["email"];
                 $_SESSION["propic"] = $user["propic"];
+                $_SESSION["post"] = $user["posts"];
+                $_SESSION["posts"] = $user["posts"];
             }else{
                 $_SESSION["status"] = null;
                 $_SESSION["message"] = "Username or Password incorrect";
@@ -41,6 +43,8 @@ function convPWD($pwd){
             $_SESSION["status"] = null;
             $_SESSION["message"] = "User not found";
         }
+     
+        
 
  
 
