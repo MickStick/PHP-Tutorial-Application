@@ -3,7 +3,7 @@ require 'controller/MainController.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <?php $title = "Login"; ?>
+    <?php $title = "Register"; ?>
 
     <head>
         <?php
@@ -16,7 +16,7 @@ require 'controller/MainController.php';
         <main id="login-view">  
                      
                 <?php
-                include 'login.php';
+                include 'register.php';
                 ?>           
         </main>
     </body>

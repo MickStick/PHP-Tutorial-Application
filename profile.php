@@ -3,6 +3,10 @@
 require 'controller/MainController.php';
 $title = $_SESSION["fname"]. " " .$_SESSION["lname"];
 
+if($_SESSION["propic"] == "" || $_SESSION["propic"] == null){
+    $_SESSION["propic"] = "public/static/BaseProPic.png";
+}
+
 ?>
 
 <html lang="en">

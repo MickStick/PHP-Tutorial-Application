@@ -1,29 +1,47 @@
 <?php
-    include 'model/DBConfig.php';
-    include 'model/Users.php';
     
     session_start();
+    /*else{
+        
+    }*/
+    
+
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(isset($_POST['login'])){
             require 'LoginController.php';
-            header("location: profile.php");
-        }else if(isset($_POST['makePost'])){
+            
+        }else if(isset($_POST['register'])){
+            require 'RegisterController.php';
         }
-        /*if($_SERVER["REQUEST_METHOD"] == "GET"){
-            if(isset($_POST['makePost'])){
-                echo "pressed";
+    }else if($_SERVER["REQUEST_METHOD"] == "GET"){
+        if(isset($_GET["uname"])){
+            include '../model/DBConfig.php';
+            $uname = $_REQUEST["uname"];
+            $name = $conn->query("SELECT * FROM users WHERE username = '$uname'");
+            if($name->num_rows > 0){
+                $data = true;
+            }else{
+                $data = false;
             }
-        }*/
-       
-      
-       
-       /*if($users!= null){
-           echo $users;
-        header("location: view/profile.php");
-       }else{
-       // header("location: view/");
-        header("location: view/profile.php");
-       }*/
+            $conn->close();
+            echo $data;
+        }else{
+            if($_SERVER['REQUEST_URI'] == "/" ||  $_SERVER['REQUEST_URI'] == "/signup.php"){
+                if(isset($_SESSION["status"])){ 
+                    if($_SESSION["log"]){
+                        header("location: /profile.php");
+                    }
+                    
+                }
+                
+            }else{
+                if(!isset($_SESSION["status"])){
+                    header("location: /");
+                }else if(!$_SESSION["log"]){
+                    header("location: /");
+                }
+            }
+        }
     }
     
 

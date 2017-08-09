@@ -1,5 +1,5 @@
 <?php
-
+include 'model/DBConfig.php';
 function convID($id){
     $convid = hash('sha256',$id);
     return $convid;
@@ -25,6 +25,7 @@ function convPWD($pwd){
             //print "db password: " .$user_pwd["password"] . ", inputted password: " .$pwd . ", raw password: " .$pword;
             if($user_pwd["password"] == $pwd){
                 $_SESSION["status"] = "logged in";
+                $_SESSION["log"] = true;
                 $_SESSION["message"] = "User Found";
                 $_SESSION["id"] = $user["id"];
                 $_SESSION["username"] = $user["username"];
@@ -34,13 +35,16 @@ function convPWD($pwd){
                 $_SESSION["propic"] = $user["propic"];
                 $_SESSION["post"] = $user["posts"];
                 $_SESSION["posts"] = $user["posts"];
+                header("location: profile.php");
             }else{
-                $_SESSION["status"] = null;
+                $_SESSION["status"] = "login failed";
+                $_SESSION["log"] = false;
                 $_SESSION["message"] = "Username or Password incorrect";
             }
             
         }else{
-            $_SESSION["status"] = null;
+            $_SESSION["status"] = "login failed";            
+            $_SESSION["log"] = false;
             $_SESSION["message"] = "User not found";
         }
      
