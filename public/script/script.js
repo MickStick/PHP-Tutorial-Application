@@ -27,10 +27,10 @@ $(document).ready(function() {
 
     $('.edit-container form input[type=file]').on('change', function() {
         var filename = $(this).val().replace(/([^\\]*\\)*/, '');
-        var pngExt = /^[A-Za-z0-9\W]+.png$/;
-        var jpgExt = /^[A-Za-z0-9\W]+.jpg$/;
-        var JPGExt = /^[A-Za-z0-9\W]+.JPG$/;
-        var jpegExt = /^[A-Za-z0-9\W]+.jpeg$/;
+        var pngExt = /^[A-Za-z0-9\W_]+.png$/;
+        var jpgExt = /^[A-Za-z0-9\W_]+.jpg$/;
+        var JPGExt = /^[A-Za-z0-9\W_]+.JPG$/;
+        var jpegExt = /^[A-Za-z0-9\W_]+.jpeg$/;
         if (pngExt.test(filename) || jpgExt.test(filename) || JPGExt.test(filename) || jpegExt.test(filename)) {
             PreviewImage(this);
             $('#edit-pic').attr("alt", filename);
