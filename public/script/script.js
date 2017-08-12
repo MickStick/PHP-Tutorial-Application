@@ -1,5 +1,56 @@
 $(document).ready(function() {
 
+	$('#settings').on('click', function(e){
+		e.preventDefault();
+		$('#settings-list').animate({height: 'toggle'},250);
+		
+	});
+	
+	function openEdit(){
+		$('html').css({"overflow-y":"hidden"});
+		$('.edit-wrapper').animate({opacity: 'toggle'}, 300);
+		
+	}
+
+	$('#edit-profile').on('click', function(e){
+		e.preventDefault();
+		$('#settings-list').animate({height: 'toggle'},250);
+		openEdit();
+	});
+
+	$('.edit-container > button').on('click', function(e){
+		$('.edit-wrapper').animate({opacity: 'toggle'}, 300, function(){
+			$('html').css({"overflow-y":"initial"});
+		});
+		
+	});
+
+	$('.edit-container form input[type=file]').on('change', function(){
+		var filename = $(this).val().replace(/([^\\]*\\)*/,'');
+    		var pngExt = /^[A-Za-z0-9\W]+.png$/;
+    		var jpgExt = /^[A-Za-z0-9\W]+.jpg$/;
+		var jpegExt = /^[A-Za-z0-9\W]+.jpeg$/;
+    		if(pngExt.test(filename) || jpgExt.test(filename) || jpegExt.test(filename)){
+    			PreviewImage(this);
+			$('#edit-pic').attr("alt",filename);
+    		}else if(this.value == "" || this.value == null){
+    	
+      			$('#edit-pic').attr("src","");
+			$('#edit-pic').attr("alt"," ");
+    		}else{
+    			alert("Invalid extension: You may only upload \".png\" or \".jpg\" or \".jpeg\" files");
+    		}
+	});
+
+	function PreviewImage(file) {
+        	var oFReader = new FileReader();
+        	oFReader.readAsDataURL(file.files[0]);
+		
+        	oFReader.onload = function (oFREvent) {
+        		$('#edit-pic').attr("src",oFREvent.target.result); 
+        	};
+   	};
+
     function createPost(res) {
         var Parent = $('#postContainer');
         var delBtn = $("<button><i class=\"material-icons\">delete</i><button>");

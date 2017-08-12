@@ -4,10 +4,6 @@
     font-family: 'Roboto';
 }
 
-html {
-    overflow-y: scroll;
-}
-
 body {
     background: rgba(255, 255, 255, 1);
     width: 100%;
@@ -27,7 +23,7 @@ header {
     padding: 15px 0px 0px 0px!important;
     width: 100%;
     background: rgba(240, 240, 240, 1);
-    z-index: 10;
+    z-index: 5;
 }
 
 header:hover {
@@ -91,7 +87,7 @@ header ul {
     transition: width 250ms, height 250ms;
 }
 
-header:hover ul {
+header:hover #nav-list {
     width: 250px;
     height: 25px;
     margin-right: 10px;
@@ -120,6 +116,209 @@ header ul li a:active,
 header ul li a:focus {
     outline: none;
 }
+#settings-list{
+	position: absolute;
+	top: 55px;
+	right: 2.5%;
+	width: 100px;
+	height: auto;
+	background: #fff;
+	border: 0.5px solid;
+	border-color: rgba(194,194,194,0.2);
+	border-radius: 5px;
+	padding: 2mm 0mm;
+	transition: none;
+		
+}
+
+#settings-list li{
+	display: block;
+	width: 100%;
+	margin: auto;
+	margin-left: 0mm;
+	margin-bottom: 3mm;
+	text-align: center;
+}
+
+#logout {
+    font-size: 16px;
+    text-decoration: none;
+    color: #000;
+}
+
+#logout:hover {
+    font-weight: 600;
+}
+
+.edit-wrapper{
+	position: fixed;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.3);
+	z-index: 7;
+	overflow-y: scroll;
+}
+
+.edit-container{
+	display: block;
+	margin: auto;
+	width: 400px;
+	height: auto;
+	margin-top: 10px;
+	margin-bottom: 50px;
+	padding-top: 5mm;
+	padding-bottom: 20mm;
+	background: #fff;
+	border-radius: 5px;
+	z-index: 100;
+}
+
+.edit-container > button{
+	background: transparent;
+	border: none;
+	color: rgba(194,194,194, 0.5);
+	position: relative;
+	left: 90%;
+	margin-top: -20px;
+	cursor: pointer;
+}
+
+.edit-container button:hover{
+	color: rgba(194,194,194, 0.9);
+}
+
+.edit-container button:active{
+	color: rgba(194,194,194, 0.2);
+}
+
+.edit-container button:focus{
+	outline: none;
+}
+
+.edit-container form{
+	width: 100%;
+	height: 90%;
+	display: block;
+	position: relative;
+}
+
+.edit-container form label{
+	display: block;
+    	text-align: center;
+    	width: 100%;
+    	font-size: 18px;
+	overflow: hidden;
+}
+
+.edit-container form label:first-of-type{
+    	font-size: 26px;
+}
+
+
+.edit-container form label input[type=file]{
+	cursor: inherit;
+    	display: block;
+	margin: auto;
+   	filter: alpha(opacity=0);
+    	opacity: 0;
+	width: 220px;
+	height: auto;
+	position: absolute;
+	left: 90px;
+	margin-top: -25px;
+	cursor: pointer;
+}
+
+.edit-container form span{
+	width: 400px;
+	height: 150px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	display: block;
+	text-align: center
+}
+
+.edit-container form span img{
+	display: block;
+	margin-left: 135px;
+	text-align: center; 
+	width: 150px;
+	height: 150px;
+	border-radius: 600px;
+	background: rgba(240,240,245,0.3);
+}
+
+.edit-container form table{
+	width: 100%;
+   	border-collapse: separate;
+   	border-spacing: 1.5mm 5mm;
+	margin-top -10px;
+}
+
+.edit-container form table tr{
+	width: 100%;
+    	margin-bottom: 100px !important;
+}
+
+.edit-container form table tr td{
+	width: 100%;
+}
+
+.edit-container form table tr td label{
+	display: block;
+	text-align: left;
+	text-indent: 5%;
+    	width: 100%;
+    	font-size: 22px;
+}
+
+.edit-container form table tr td input{
+	width: 90%;
+	display: block;
+	margin: auto;
+    	font-size: 18px;
+   	height: 32px;
+    	padding: 5px;
+    	border: 0.4mm solid;
+    	border-color: rgba(89, 171, 227, 0.3);
+}
+
+.edit-container form table tr td input:hover{
+	background-color: rgba(228, 241, 254, 0.1);
+}
+
+.edit-container form button{
+	float: right;
+    	margin-right: 5%;
+    	width: 60px;
+    	height: 40px;
+    	text-align: center;
+    	font-size: 24px;
+    	line-height: 20px;
+    	background-color: rgba(89, 171, 227, 1);
+    	transition: background-color 300ms;
+    	border: none;
+    	border-radius: 5px;
+    	cursor: pointer;
+}
+
+.edit-container form button:hover{
+	background-color: rgba(228, 241, 254, 0.8);
+    	border: 0.5mm solid;
+    	border-color: rgba(89, 171, 227, 1);
+    	color: rgba(89, 171, 227, 1);
+}
+
+.edit-container form button:active{
+	background-color: transparent;
+}
+
+.edit-container form button:focus{
+	outline: none;
+}
+
+
 
 
 /*////////////////////////////////////////// Login Page Styles ///////////////////////////// top///*/
@@ -320,19 +519,6 @@ header ul li a:focus {
     font-weight: 600;
     font-size: 16px;
     cursor: pointer;
-}
-
-#logout {
-    float: right;
-    clear: both;
-    margin-top: 2mm;
-    font-size: 16px;
-    text-decoration: none;
-    color: #000;
-}
-
-#logout:hover {
-    font-weight: 600;
 }
 
 .ToPost-Container {

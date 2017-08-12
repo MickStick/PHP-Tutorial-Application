@@ -12,7 +12,9 @@
             
         }else if(isset($_POST['register'])){
             require 'RegisterController.php';
-        }
+        }else if(isset($_POST['edit'])){
+		require 'UpdateProfile.php';
+	}
     }else if($_SERVER["REQUEST_METHOD"] == "GET"){
         if(isset($_GET["uname"])){
             include '../model/DBConfig.php';
