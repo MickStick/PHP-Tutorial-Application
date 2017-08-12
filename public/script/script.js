@@ -1,55 +1,56 @@
 $(document).ready(function() {
 
-	$('#settings').on('click', function(e){
-		e.preventDefault();
-		$('#settings-list').animate({height: 'toggle'},250);
-		
-	});
-	
-	function openEdit(){
-		$('html').css({"overflow-y":"hidden"});
-		$('.edit-wrapper').animate({opacity: 'toggle'}, 300);
-		
-	}
+    $('#settings').on('click', function(e) {
+        e.preventDefault();
+        $('#settings-list').animate({ height: 'toggle' }, 250);
 
-	$('#edit-profile').on('click', function(e){
-		e.preventDefault();
-		$('#settings-list').animate({height: 'toggle'},250);
-		openEdit();
-	});
+    });
 
-	$('.edit-container > button').on('click', function(e){
-		$('.edit-wrapper').animate({opacity: 'toggle'}, 300, function(){
-			$('html').css({"overflow-y":"initial"});
-		});
-		
-	});
+    function openEdit() {
+        $('html').css({ "overflow-y": "hidden" });
+        $('.edit-wrapper').animate({ opacity: 'toggle' }, 300);
 
-	$('.edit-container form input[type=file]').on('change', function(){
-		var filename = $(this).val().replace(/([^\\]*\\)*/,'');
-    		var pngExt = /^[A-Za-z0-9\W]+.png$/;
-    		var jpgExt = /^[A-Za-z0-9\W]+.jpg$/;
-		var jpegExt = /^[A-Za-z0-9\W]+.jpeg$/;
-    		if(pngExt.test(filename) || jpgExt.test(filename) || jpegExt.test(filename)){
-    			PreviewImage(this);
-			$('#edit-pic').attr("alt",filename);
-    		}else if(this.value == "" || this.value == null){
-    	
-      			$('#edit-pic').attr("src","");
-			$('#edit-pic').attr("alt"," ");
-    		}else{
-    			alert("Invalid extension: You may only upload \".png\" or \".jpg\" or \".jpeg\" files");
-    		}
-	});
+    }
 
-	function PreviewImage(file) {
-        	var oFReader = new FileReader();
-        	oFReader.readAsDataURL(file.files[0]);
-		
-        	oFReader.onload = function (oFREvent) {
-        		$('#edit-pic').attr("src",oFREvent.target.result); 
-        	};
-   	};
+    $('#edit-profile').on('click', function(e) {
+        e.preventDefault();
+        $('#settings-list').animate({ height: 'toggle' }, 250);
+        openEdit();
+    });
+
+    $('.edit-container > button').on('click', function(e) {
+        $('.edit-wrapper').animate({ opacity: 'toggle' }, 300, function() {
+            $('html').css({ "overflow-y": "initial" });
+        });
+
+    });
+
+    $('.edit-container form input[type=file]').on('change', function() {
+        var filename = $(this).val().replace(/([^\\]*\\)*/, '');
+        var pngExt = /^[A-Za-z0-9\W]+.png$/;
+        var jpgExt = /^[A-Za-z0-9\W]+.jpg$/;
+        var JPGExt = /^[A-Za-z0-9\W]+.JPG$/;
+        var jpegExt = /^[A-Za-z0-9\W]+.jpeg$/;
+        if (pngExt.test(filename) || jpgExt.test(filename) || JPGExt.test(filename) || jpegExt.test(filename)) {
+            PreviewImage(this);
+            $('#edit-pic').attr("alt", filename);
+        } else if (this.value == "" || this.value == null) {
+
+            $('#edit-pic').attr("src", "");
+            $('#edit-pic').attr("alt", " ");
+        } else {
+            alert("Invalid extension: You may only upload \".png\" or \".jpg\" or \".JPG\" or \".jpeg\" files");
+        }
+    });
+
+    function PreviewImage(file) {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(file.files[0]);
+
+        oFReader.onload = function(oFREvent) {
+            $('#edit-pic').attr("src", oFREvent.target.result);
+        };
+    };
 
     function createPost(res) {
         var Parent = $('#postContainer');
@@ -232,7 +233,7 @@ $(document).ready(function() {
         return false;
     });
 
-    function showPValMsg(parent){
+    function showPValMsg(parent) {
         parent.append("<p style=\"font-size: 12px;color: red; position: absolute; right: 0%; line-height: 1px;\">Needs: 1 UC letter, 1 LC letter, 1 number, 1 symbol, 8 or more characters, no spaces</p>")
     }
 
@@ -247,11 +248,11 @@ $(document).ready(function() {
                 parent.children('p').remove();
             }
             pword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W|_?).{8,}$/;
-            if(!pword.test(this.value)){
+            if (!pword.test(this.value)) {
                 showPValMsg(parent);
-            }else if(/^(?=.*\s).{0,}$/.test(this.value)){
+            } else if (/^(?=.*\s).{0,}$/.test(this.value)) {
                 showPValMsg(parent);
-            }else {          
+            } else {
                 if (parent.children().length > 1) {
                     parent.children('p').remove();
                 }
@@ -266,14 +267,14 @@ $(document).ready(function() {
             if (parent.children().length == 1) {
                 showValErr(parent);
             }
-        } else{
-            
+        } else {
+
             if (parent.children().length > 1) {
                 parent.children('p').remove();
             }
-            if(this.value != $('#pword').val()){
+            if (this.value != $('#pword').val()) {
                 parent.append("<p style=\"color: red; position: absolute; right: 0%; line-height: 1px;\">Passwords must be the same</p>")
-            }else{
+            } else {
                 if (parent.children().length > 1) {
                     parent.children('p').remove();
                 }
@@ -282,20 +283,20 @@ $(document).ready(function() {
         return false;
     });
 
-    $('#regBtn').on('click', function(e){
+    $('#regBtn').on('click', function(e) {
         alert('clicked');
         var inputs = $('.loginForm table tr td input');
         var val = true;
-        
-        for(var x = 0; x < inputs.length; x++){
+
+        for (var x = 0; x < inputs.length; x++) {
             //console.log(inputs[x].parentElement.children.length);
-            if(inputs[x].value == "" || inputs[x].parentElement.children.length > 1){
+            if (inputs[x].value == "" || inputs[x].parentElement.children.length > 1) {
                 val = false;
                 break;
             }
         }
 
-        if(!val){
+        if (!val) {
             e.preventDefault();
         }
     });
