@@ -18,6 +18,7 @@
                         $Post->message = null;
                         $post = json_encode($Post);
                         echo  $post;  
+                        $conn->close;
                 }else{
                         $Post = new \stdClass();
                         $Post->post_id = $post_id;
@@ -30,7 +31,12 @@
                         $Post->post = $_SESSION["post"];
         
                         $post = json_encode($Post);
-                        echo  $post;    
+                        $post_num = $_SESSION["posts"];
+                        if($conn->query("UPDATE users SET posts='$post_num' WHERE id='$id'")){
+                                echo  $post;  
+                                $conn->close;     
+                        }
+                        
                 }
                 
         }else if($_SERVER["REQUEST_METHOD"] == "GET"){
@@ -52,17 +58,20 @@
                                         $post[$x] = $Post; 
                                         $x += 1;                         
                                 }
-                                echo  $data = json_encode($post);   
+                                echo  $data = json_encode($post); 
+                                $conn->close;
                                  
                         }else{
                                 $Post = new \stdClass();
                                 $Post->message = null; 
                                 $Post->body = "No Posts Found";
                                 $post[0] = $Post;
-                                echo  $data = json_encode($post);  
+                                echo  $data = json_encode($post); 
+                                $conn->close;
                         }
                 }else{
                         echo "else";
+                        $conn->close;
                 }
                 
         }

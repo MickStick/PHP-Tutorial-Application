@@ -13,7 +13,7 @@
     <a href="profile.php" id="name" title="You"><?php echo $_SESSION["fname"]. " " .$_SESSION["lname"]; ?></a>
 <ul id="settings-list" hidden>
 	<li><a id="edit-profile">Edit Profile</a></li>
-	<li><a id="logout" href="#">Logout</a></li>
+	<li><a id="logout" href="controller/logout.php">Logout</a></li>
 </ul>
 
 <div class="edit-wrapper" hidden>

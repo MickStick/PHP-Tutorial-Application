@@ -96,30 +96,34 @@ $(document).ready(function() {
         e.preventDefault();
         var xmlhttp = new XMLHttpRequest();
         var Post = $('.ToPost-Container form textarea').val();
-        var Pic = "";
-        Post = Post.replace(/\n/g, "@@@");
-
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var Parent = $('#postContainer');
-                var res = JSON.parse(this.responseText); //JSON.stringify(this.responseText);
-                if (res.message != null) {
-                    createPost(res);
-                } else {
-                    alert(res.body);
+        if(Post == "" || Post == null){
+            
+        }else{
+            var Pic = "";
+            Post = Post.replace(/\n/g, "@@@");
+    
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var Parent = $('#postContainer');
+                    var res = JSON.parse(this.responseText); //JSON.stringify(this.responseText);
+                    if (res.message != null) {
+                        createPost(res);
+                    } else {
+                        alert(res.body);
+                    }
+                    //alert(this.responseText);
+    
+                    $('.ToPost-Container form textarea').val("");
                 }
-                //alert(this.responseText);
-
-                $('.ToPost-Container form textarea').val("");
-            }
-
-        };
-        xmlhttp.open("POST", "controller/PostController.php?post=" + Post + "&pic=" + Pic, true);
-        xmlhttp.send();
+    
+            };
+            xmlhttp.open("POST", "controller/PostController.php?post=" + Post + "&pic=" + Pic, true);
+            xmlhttp.send();   
+        }
         //alert(Post);
     });
 
-    $('#logout').on('click', function(e) {
+    /*$('#logout').on('click', function(e) {
         e.preventDefault();
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -132,7 +136,7 @@ $(document).ready(function() {
         }
         xmlhttp.open("POST", "controller/Logout.php");
         xmlhttp.send();
-    });
+    });*/
 
     ////////////////////////////////////////// register/login ////////////////////////////////////////////
 
