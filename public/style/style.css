@@ -573,6 +573,48 @@ header ul li a:focus {
     outline: none;
 }
 
+.EditPost {
+    width: 98.5%;
+    height: 55px;
+    padding: 0px 4px;
+    line-height: 16px;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px 5px 0px 0px;
+    resize: none;
+}
+
+.EditPost::-webkit-scrollbar {
+    background-color: transparent;
+    /*rgba(200, 200, 200, 0.2);*/
+    width: 10px;
+}
+
+.EditPost::-webkit-scrollbar-button {
+    /*background-color: rgba(220, 220, 220, 1);
+    color: rgba(255, 255, 255, 1);
+    height: 12px;
+    border-radius: 10px 10px 0px 0px;*/
+    display: none;
+}
+
+.EditPost::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: rgba(250, 250, 250, 1);
+}
+
+.EditPost::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.EditPost:focus {
+    outline: none;
+}
+
 .ToPost-Container button {
     /* position: relative; */
     float: right;
@@ -664,7 +706,42 @@ header ul li a:focus {
     color: rgba(255, 0, 0, 0.7);
 }
 
-.Post button:first-of-type:focus {
+#upPost{
+    float: none;
+    position: relative;
+    left: 93%;
+    color: rgba(220, 220, 220, 0.7);
+}
+
+#upPost:hover {
+    color: rgba(30, 180, 255, 1);
+}
+
+#upPost:active {
+    color: rgba(30, 180, 255, 0.7);
+}
+
+#upPost:focus {
+    outline: none;
+}
+
+.Post button[disabled=disabled]{
+    cursor: initial;
+}
+
+.Post button[disabled=disabled]:hover{
+    color: rgba(220, 220, 220, 0.7);
+    background: transparent;
+}
+
+.Post button[disabled=disabled]:active{
+    color: rgba(220, 220, 220, 0.7);
+    background: transparent;
+}
+
+.Post button[disabled=disabled]:focus{
+    color: rgba(220, 220, 220, 0.7);
+    background: transparent;
     outline: none;
 }
 

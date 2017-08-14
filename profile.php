@@ -14,7 +14,7 @@ if($_SESSION["propic"] == "" || $_SESSION["propic"] == null){
             <?php
             include 'partials/head.php';
             ?>        
-            <script src="public/script/fetchPerPosts.js"></script>
+            <!--<script src="public/script/fetchPerPosts.js"></script>-->
         </head>
     <header>
         <?php

@@ -3,41 +3,67 @@
         include '../model/DBConfig.php';
         //
         if($_SERVER["REQUEST_METHOD"] == "POST"){
-                $post_id = ($_SESSION["id"]  *  pow(10,(strlen($_SESSION["posts"]) + 1))) + $_SESSION["posts"] + 1;
-                $_SESSION["posts"] += 1;
-                $id = $_SESSION["id"];
-                $fname = $_SESSION["fname"];
-                $lname = $_SESSION["lname"];
-                $body = $_REQUEST["post"];
-                $pic = $_REQUEST["pic"];
-                $post_date = date("m.d.Y");
-                $sql = "INSERT INTO posts (post_id,id, fname, lname, body, picture, post_date) VALUES ('$post_id','$id', '$fname','$lname', '$body', '$pic','$post_date')";
-                if(!$conn->query($sql)){
-                        $Post = new \stdClass();
-                        $Post->body = $conn->error;
-                        $Post->message = null;
-                        $post = json_encode($Post);
-                        echo  $post;  
-                        $conn->close;
+                if(isset($_REQUEST["pid"])){
+                        $post_id = $_REQUEST["pid"];
+                        $post = $_REQUEST["post"];
+                        $sql = "UPDATE posts SET body='$post' WHERE post_id = '$post_id'";
+                        if($conn->query($sql)){
+                                $Post = new \stdClass();
+                                $Post->message = "UPDATED"; 
+                                $Post->body = "Post updated";
+                                // $post[0] = $Post;
+                                // echo  $data = json_encode($post); 
+                                $post = json_encode($Post);
+                                echo  $post; 
+                                $conn->close;
+                        }else{
+                                $Post = new \stdClass();
+                                $Post->message = null; 
+                                $Post->body = "Update Failed: ".$conn->error;
+                                // $post[0] = $Post;
+                                // echo  $data = json_encode($post); 
+                                $post = json_encode($Post);
+                                echo  $post; 
+                                $conn->close;
+                        }   
                 }else{
-                        $Post = new \stdClass();
-                        $Post->post_id = $post_id;
-                        $Post->body = $body;//$_REQUEST["post"];
-                        $Post->name = $_SESSION["fname"]. " " . $_SESSION["lname"];
-                        $Post->face = $_SESSION["propic"];
-                        $Post->date = $post_date;
-                        $Post->message = "Saved";
-                        $Post->posts = $_SESSION["posts"];
-                        $Post->post = $_SESSION["post"];
-        
-                        $post = json_encode($Post);
-                        $post_num = $_SESSION["posts"];
-                        if($conn->query("UPDATE users SET posts='$post_num' WHERE id='$id'")){
+                        $post_id = ($_SESSION["id"]  *  pow(10,(strlen($_SESSION["posts"]) + 1))) + $_SESSION["posts"] + 1;
+                        $_SESSION["posts"] += 1;
+                        $id = $_SESSION["id"];
+                        $fname = $_SESSION["fname"];
+                        $lname = $_SESSION["lname"];
+                        $body = $_REQUEST["post"];
+                        $pic = $_REQUEST["pic"];
+                        $post_date = date("m.d.Y");
+                        $sql = "INSERT INTO posts (post_id,id, fname, lname, body, picture, post_date) VALUES ('$post_id','$id', '$fname','$lname', '$body', '$pic','$post_date')";
+                        if(!$conn->query($sql)){
+                                $Post = new \stdClass();
+                                $Post->body = $conn->error;
+                                $Post->message = null;
+                                $post = json_encode($Post);
                                 echo  $post;  
-                                $conn->close;     
-                        }
-                        
+                                $conn->close;
+                        }else{
+                                $Post = new \stdClass();
+                                $Post->post_id = $post_id;
+                                $Post->body = $body;//$_REQUEST["post"];
+                                $Post->name = $_SESSION["fname"]. " " . $_SESSION["lname"];
+                                $Post->face = $_SESSION["propic"];
+                                $Post->date = $post_date;
+                                $Post->message = "Saved";
+                                $Post->posts = $_SESSION["posts"];
+                                $Post->post = $_SESSION["post"];
+                
+                                $post = json_encode($Post);
+                                $post_num = $_SESSION["posts"];
+                                if($conn->query("UPDATE users SET posts='$post_num' WHERE id='$id'")){
+                                        echo  $post;  
+                                        $conn->close;     
+                                }
+                                
+                        }  
                 }
+                
                 
         }else if($_SERVER["REQUEST_METHOD"] == "GET"){
                 if($_REQUEST["type"] == 0){
@@ -73,6 +99,26 @@
                         echo "else";
                         $conn->close;
                 }
+                
+        }else if($_SERVER["REQUEST_METHOD"] == "DELETE"){
+                $post_id = $_REQUEST["pid"];
+                $sql = "DELETE FROM posts WHERE post_id = '$post_id'";
+                if($conn->query($sql)){
+                        $Post = new \stdClass();
+                        $Post->message = "DELETED"; 
+                        $Post->body = "Post deleted";
+                        $post[0] = $Post;
+                        echo  $data = json_encode($post); 
+                        $conn->close;
+                }else{
+                        $Post = new \stdClass();
+                        $Post->message = null; 
+                        $Post->body = "Delete Failed: ".$conn->error;
+                        $post[0] = $Post;
+                        echo  $data = json_encode($post); 
+                        $conn->close;
+                }
+        }else if($_SERVER["REQUEST_METHOD"] == "PUT"){
                 
         }
     

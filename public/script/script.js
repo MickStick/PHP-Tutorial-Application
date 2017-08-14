@@ -1,4 +1,8 @@
 $(document).ready(function() {
+    
+    if(window.location.pathname == "/profile.php"){
+        fetch();
+    }
 
     $('#settings').on('click', function(e) {
         e.preventDefault();
@@ -51,14 +55,128 @@ $(document).ready(function() {
             $('#edit-pic').attr("src", oFREvent.target.result);
         };
     };
+    
+    function fetch() {
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var Parent = $('#postContainer');
+               var res = JSON.parse(this.responseText); //JSON.stringify(this.responseText);
+                if(res[0].message != null){
+                    for(var x = 0; x < res.length; x++){
+                        createPost(res[x]);
+                    }
+                    
+                }else{
+                    alert(res[0].body);
+                }
+                //alert(this.responseText);
+                //$('.ToPost-Container form textarea').val(res[0].message);
+            }
+
+        }
+        xmlhttp.open("GET", "controller/PostController.php?type=0", true);
+        xmlhttp.send();
+        //alert(Post);
+    };
 
     function createPost(res) {
         var Parent = $('#postContainer');
-        var delBtn = $("<button><i class=\"material-icons\">delete</i><button>");
-        var editBtn = $("<button><i class=\"material-icons\">mode_edit</i><button>");
+        var delBtn = $("<button id=\"delPost\"><i class=\"material-icons\">delete</i></button>");
+        var editBtn = $("<button id=\"editPost\"><i class=\"material-icons\">mode_edit</i></button>");
         var Post = $("<div class=\"Post\"></div>");
         Post.append(delBtn);
         Post.append(editBtn);
+        delBtn.click(function(e){
+            e.preventDefault();
+           var parent = $(this).parent();
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var res = JSON.parse(this.responseText); //JSON.stringify(this.responseText);
+                    
+                    if (res[0].message != null) {
+                        parent.remove();
+                    } else {
+                        alert(res[0].body);
+                    }
+                }
+    
+            };
+            xmlhttp.open("DELETE", "controller/PostController.php?pid=" + parent.attr("data-id"), true);
+            xmlhttp.send();
+        });
+        editBtn.click(function(e){
+            e.preventDefault();
+            $(this).attr("disabled","true");
+            var parent = $(this).parent();
+            var oldPost = parent.children('div');
+            parent.children('div').remove();
+            var editPost = $("<textarea class=\"EditPost\"></textarea>");
+            for(var x = 0; x < oldPost.children('p').length; x++){
+                if(x == 0){
+                    editPost.val(editPost.val() + oldPost.children('p')[x].innerHTML);
+                }else{
+                    editPost.val(editPost.val() + "\n" + oldPost.children('p')[x].innerHTML);
+                }
+                
+            }
+            
+            parent.append(editPost);
+            var upBtn = $("<button id=\"upPost\"><i class=\"material-icons\">mode_edit</i></button>");
+            parent.append(upBtn);
+            upBtn.click(function(e){
+                e.preventDefault();
+                var parent = $(this).parent();
+                var btn = $(this);
+                var xmlhttp = new XMLHttpRequest();
+                var body =  parent.children('.EditPost').val().replace(/\n/g, "@@@");;
+                //alert(body);
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var res = JSON.parse(this.responseText); //JSON.stringify(this.responseText);
+                        if (res.message != null) {
+                            oldPost.children().remove();
+                            //console.log(oldPost.innerHTML);
+                            parent.children('.EditPost').remove();
+                            btn.remove();
+                            body = body.replace(/@@@/g, "\n");
+                            body = body.split('\n');
+                            for (var x = 0; x < body.length; x++) {
+                                if (body[x] == "") {
+                    
+                                    oldPost.append($("<br>"));
+                                    var post = $("<p></p>");
+                                    post.text(body[x]);
+                                    oldPost.append(post);
+                                } else {
+                                    var post = $("<p></p>");
+                                    post.text(body[x]);
+                                    oldPost.append(post);
+                                }
+                    
+                    
+                            }
+                            parent.append(oldPost);
+                            parent.children('#editPost').removeAttr("disabled");
+                            //alert(res.message);
+                        } else {
+                            alert(res.body);
+                        }
+                        //alert(this.responseText);
+                    }
+        
+                };
+                xmlhttp.open("POST", "controller/PostController.php?pid=" + parent.attr("data-id") + "&post=" + body, true);
+                if(parent.children('.EditPost').val() == "" || parent.children('.EditPost').val() == null || !/\S+/.test(parent.children('.EditPost').val())){
+            
+                }else{
+                    xmlhttp.send();
+                }
+                
+            });
+        });
         var name = $("<label></label>");
         var date = $("<label></label>");
         var face = $("<img/>");
@@ -67,6 +185,7 @@ $(document).ready(function() {
         var Body = "" + res.body + "";
         var body = Body.replace(/@@@/g, "\n");
         body = body.split('\n');
+        Body = $('<div style=\"width:100%; height: auto\"></div>');
         name.text(res.name);
         date.text(res.date);
         face.attr("src", res.face);
@@ -78,27 +197,30 @@ $(document).ready(function() {
         for (var x = 0; x < body.length; x++) {
             if (body[x] == "") {
 
-                Post.append($("<br>"));
+                Body.append($("<br>"));
                 var post = $("<p></p>");
                 post.text(body[x]);
-                Post.append(post);
+                Body.append(post);
             } else {
                 var post = $("<p></p>");
                 post.text(body[x]);
-                Post.append(post);
+                Body.append(post);
             }
 
 
         }
+        Post.append(Body);
         Parent.prepend(Post);
     }
     $('.ToPost-Container form button').on('click', function(e) {
         e.preventDefault();
         var xmlhttp = new XMLHttpRequest();
         var Post = $('.ToPost-Container form textarea').val();
-        if(Post == "" || Post == null){
+        if(Post == "" || Post == null || !/\S+/.test(Post)){
             
-        }else{
+        }/*else if(!/^[0-9a-zA-Z]*\s[0-9a-zA-Z ]*$/.test(Post)){
+            alert(Post);
+        }*/else{
             var Pic = "";
             Post = Post.replace(/\n/g, "@@@");
     
@@ -123,20 +245,9 @@ $(document).ready(function() {
         //alert(Post);
     });
 
-    /*$('#logout').on('click', function(e) {
-        e.preventDefault();
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.responseText == null) {
-                alert(this.responseText);
-            } else {
-                window.location = "index.php";
-            }
-
-        }
-        xmlhttp.open("POST", "controller/Logout.php");
-        xmlhttp.send();
-    });*/
+    $('#logout').on('click', function(e) {
+        $('#settings-list').animate({ height: 'toggle' }, 250);
+    });
 
     ////////////////////////////////////////// register/login ////////////////////////////////////////////
 

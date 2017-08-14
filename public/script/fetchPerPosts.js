@@ -28,11 +28,29 @@ $(document).ready(function() {
     
         function createPost(res) {
             var Parent = $('#postContainer');
-            var delBtn = $("<button><i class=\"material-icons\">delete</i><button>");
-            var editBtn = $("<button><i class=\"material-icons\">mode_edit</i><button>");
+            var delBtn = $("<button id=\"delPost\"><i class=\"material-icons\">delete</i></button>");
+            var editBtn = $("<button id=\"editPost\"><i class=\"material-icons\">mode_edit</i></button>");
             var Post = $("<div class=\"Post\"></div>");
             Post.append(delBtn);
             Post.append(editBtn);
+            delBtn.click(function(e){
+                e.preventDefault();
+                var parent = $(this).parent();
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var res = JSON.parse(this.responseText); //JSON.stringify(this.responseText);
+                        if (res.message) {
+                            parent.remove();
+                        } else {
+                            alert(res.body);
+                        }
+                    }
+        
+                };
+                xmlhttp.open("DELETE", "controller/PostController.php?id=" + parent.attr("data-id"), true);
+                xmlhttp.send();
+            });
             var name = $("<label></label>");
             var date = $("<label></label>");
             var face = $("<img/>");
