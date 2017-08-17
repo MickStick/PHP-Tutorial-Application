@@ -24,6 +24,7 @@ function convPWD($pwd){
             $pwd = convPWD($pword);
             //print "db password: " .$user_pwd["password"] . ", inputted password: " .$pwd . ", raw password: " .$pword;
             if($user_pwd["password"] == $pwd){
+                $notifs =  $conn->query("SELECT * FROM notifications WHERE id = '$id'");
                 $_SESSION["status"] = "logged in";
                 $_SESSION["log"] = true;
                 $_SESSION["message"] = "User Found";
@@ -35,17 +36,31 @@ function convPWD($pwd){
                 $_SESSION["propic"] = $user["propic"];
                 $_SESSION["post"] = $user["posts"];
                 $_SESSION["posts"] = $user["posts"];
+                $_SESSION["notif_count"] = $notifs->num_rows;
+                $x = 0;
+                if($notifs->num_rows > 0){
+                    while($notif = $notifs->fetch_assoc()){
+                        $_SESSION["notifs"][$x] = $notif;
+                        $x++;
+                    }
+                    
+                }else{
+                    $_SESSION["notifs"] = null;
+                }
+                $conn->close;
                 header("location: profile.php");
             }else{
                 $_SESSION["status"] = "login failed";
                 $_SESSION["log"] = false;
                 $_SESSION["message"] = "Username or Password incorrect";
+                $conn->close;
             }
             
         }else{
             $_SESSION["status"] = "login failed";            
             $_SESSION["log"] = false;
-            $_SESSION["message"] = "User not found";
+            $_SESSION["message"] = "Username or Password incorrect";
+            $conn->close;
         }
      
         

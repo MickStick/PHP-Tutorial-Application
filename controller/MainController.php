@@ -32,11 +32,27 @@
             if($_SERVER['REQUEST_URI'] == "/" ||  $_SERVER['REQUEST_URI'] == "/signup.php"){
                 if(isset($_SESSION["status"])){ 
                     if($_SESSION["log"]){
+                        include "model/DBConfig.php";
+                        $notifs =  $conn->query("SELECT * FROM notifications WHERE id = '$id'");
+                        $_SESSION["notif_count"] = $notifs->num_rows;
+                        if($notifs->num_rows > 0){
+                            $x = 0;
+                            while($notif = $notifs->fetch_assoc()){
+                                $_SESSION["notifs"][$x] = $notif;
+                                $x++;
+                            }
+                        }else{
+                            $_SESSION["notifs"] = null;
+                        }
+                
+                        $conn->close;
                         header("location: /profile.php");
                     }
                     
                 }
                 
+            }else if( $_SERVER['REQUEST_URI'] == "/index.php" || $_SERVER['REQUEST_URI'] == "/findPeople.php"){
+                 header("location: /");
             }else{
                 if(!isset($_SESSION["status"])){
                     header("location: /");

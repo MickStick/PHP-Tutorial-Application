@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html5>
 <?php
 require 'controller/MainController.php';
 $title = $_SESSION["fname"]. " " .$_SESSION["lname"];
@@ -29,7 +29,7 @@ if($_SESSION["propic"] == "" || $_SESSION["propic"] == null){
             <div class="profile-partition" id="middle-partition">
                 <div class="ToPost-Container">
                     <form method = "POST" action="profile.php">
-                        <textarea rows="20"name="post" placeholder="What's going on in your brain right now?    "></textarea>
+                        <textarea rows="20"name="post" placeholder="What's going on in your brain right now?"></textarea>
                         <button name="makePost" type="submit"><i class="material-icons">add</i></button>
                     </form>
                 </div>

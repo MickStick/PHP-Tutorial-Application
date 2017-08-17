@@ -52,6 +52,62 @@ header img {
     margin-left: 15px;
 }
 
+header #hsearchForm{
+    float: left;
+    margin-left: 25px;
+    margin-top: 5px;
+    width: 300px;
+    height: 25px;
+}
+
+header #hsearchForm input{
+    height: 100%;
+    float: left;
+    width: 80%;
+    font-weight: 600;
+    font-size: 16px;
+    border-color: rgba(80,80,80,0.3);
+    border-radius: 3px;
+}
+
+header #hsearchForm input:hover{
+}
+
+header #hsearchForm input:active{
+}
+
+header #hsearchForm input:focus{
+}
+
+header #hsearchForm button{
+    height: 29px;
+    width: 29px;
+    float: left;
+    margin-left: 5px;
+    border: none;
+    border-radius: 100px;
+    background: transparent;
+    cursor: pointer;
+}
+
+header #hsearchForm button i{
+    padding: 0 !important;
+    line-height: 24px;
+    font-size: 22px;
+}
+
+header #hsearchForm button:hover{
+    background-color: rgba(245,245,245,0.5);
+}
+
+header #hsearchForm button:active{
+    background-color: rgba(245,245,245,0.5);
+}
+
+header #hsearchForm button:focus{
+    outline: none;
+}
+
 header>a {
     float: right;
     margin-right: 20px;
@@ -783,3 +839,90 @@ header ul li a:focus {
 
 
 /*/////////////////////////////////////// Porfile Styles ////////////////////////////////bottom///*/
+
+/*/////////////////////////////////////// Finding People ///////////////////////////////////top///*/
+#find-people-view{
+    width: 100%;
+    height: auto;
+    padding: 0mm 5mm 10mm 5mm!important;
+}
+
+.FoundPeopleContainer{
+    width: 100%;
+    height: auto;
+    position: relative;
+    top: 5mm;
+    padding: 0mm 5mm 10mm 5mm!important;
+}
+
+.FoundPeopleContainer > label{
+    font-size: 26px;
+    width: 120px;
+    height: 28px;
+    line-height: 26px;
+    text-align: center;
+    border-bottom: 0.5mm solid;
+    border-color: rgba(220,220,220,0.6);
+}
+
+.PeopleFound{
+    position: relative;
+    top: 5mm;
+}
+
+.PeopleFound #foundPerson{
+    height: auto;
+    padding: 2mm;
+}
+
+.PeopleFound #foundPerson img{
+    width:55px;
+    height: 55px;
+    margin: 0px 10px 0px 10px !important;
+    border-radius: 100px;
+}
+
+.PeopleFound #foundPerson label{
+    margin: -20px  10px 0px 0px;
+    position: relative;
+    top: -20px;
+    color: rgba(100,100,120,0.7);
+}
+
+.PeopleFound #foundPerson label a{
+    color: #000;
+    text-decoration:none;
+}
+
+.PeopleFound #foundPerson label i{
+    font-size: 12px;
+    line-height: 12px;
+    color: rgba(100,100,120,0.7);
+}
+
+.PeopleFound #foundPerson button{
+    position: relative;
+    top: -20px;
+    padding: 1mm;
+    font-size: 14px;
+    background: transparent;
+    border: 2px solid;
+    border-color: rgba(200,200,210,0.5);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.PeopleFound #foundPerson button:hover{
+    color:#fff;
+    background: rgba(200,200,210,0.7);
+    border-color: rgba(200,200,210,0.6);
+}
+.PeopleFound #foundPerson button:active{
+    color:#555;
+    background: rgba(200,200,210,0.4);
+    border-color: rgba(200,200,210,0.4);
+}
+.PeopleFound #foundPerson button:focus{
+    outline: none;
+}
+/*/////////////////////////////////////// Finding People ////////////////////////////////bottom///*/

@@ -27,14 +27,15 @@
                                 $conn->close;
                         }   
                 }else{
-                        $post_id = ($_SESSION["id"]  *  pow(10,(strlen($_SESSION["posts"]) + 1))) + $_SESSION["posts"] + 1;
-                        $_SESSION["posts"] += 1;
+                        $post_id = ($_SESSION["id"]  *  pow(10,(strlen($_SESSION["posts"] + 1)))) + ($_SESSION["posts"] + 1);
+                        $_SESSION["posts"]++;
                         $id = $_SESSION["id"];
                         $fname = $_SESSION["fname"];
                         $lname = $_SESSION["lname"];
                         $body = $_REQUEST["post"];
                         $pic = $_REQUEST["pic"];
-                        $post_date = date("m.d.Y");
+                        date_default_timezone_set("America/New_York");
+                        $post_date = date("m.d.Y H:i:s");
                         $sql = "INSERT INTO posts (post_id,id, fname, lname, body, picture, post_date) VALUES ('$post_id','$id', '$fname','$lname', '$body', '$pic','$post_date')";
                         if(!$conn->query($sql)){
                                 $Post = new \stdClass();
@@ -79,6 +80,36 @@
                                         $Post->body = $res["body"];
                                         $Post->name = $res["fname"] . " " . $res["lname"];
                                         $Post->face = $_SESSION["propic"];
+                                        $Post->date = $res["post_date"];
+                                        $Post->message = "Found";  
+                                        $post[$x] = $Post; 
+                                        $x += 1;                         
+                                }
+                                echo  $data = json_encode($post); 
+                                $conn->close;
+                                 
+                        }else{
+                                $Post = new \stdClass();
+                                $Post->message = null; 
+                                $Post->body = "No Posts Found";
+                                $post[0] = $Post;
+                                echo  $data = json_encode($post); 
+                                $conn->close;
+                        }
+                }else if($_REQUEST["type"] == 2){
+                        $id = $_SESSION["pid"];
+                        $results = $conn->query("SELECT * FROM posts WHERE id = '$id'");
+                        $propic = $conn->query("SELECT * FROM users WHERE id = '$id'");
+                        $pic = $propic->fetch_assoc();
+                        $post = array();
+                        $x = 0;
+                        if($results->num_rows > 0){
+                                while($res = $results->fetch_assoc()){
+                                        $Post = new \stdClass();
+                                        $Post->post_id = $res["post_id"];
+                                        $Post->body = $res["body"];
+                                        $Post->name = $res["fname"] . " " . $res["lname"];
+                                        $Post->face = $pic["propic"];
                                         $Post->date = $res["post_date"];
                                         $Post->message = "Found";  
                                         $post[$x] = $Post; 

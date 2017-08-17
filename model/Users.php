@@ -1,75 +1,76 @@
 <?php
     class Users{
-        public static $id;
-        public static $username;
-        public static $password;
-        public static $fname;
-        public static $lname;
-        public static $propic;
-        public static $email;
+        public $id;
+        public $username;
+        public $password;
+        public $fname;
+        public $lname;
+        public $propic;
+        public $email;
+        
 
-        public static function setID($Id){
-            $id = $Id;
+        public function setID($Id){
+            $this->id = $Id;
         }
 
-        public static function getID(){
-            return $id;
+        public function getID(){
+            return $this->id;
         }
 
-        public static function setUsername($Username){
-            $username = $Username;
+        public function setUsername($Username){
+            $this->username = $Username;
         }
 
-        public static function getUsername(){
-            return $username;
+        public function getUsername(){
+            return $this->username;
         }
 
-        public static function setPassword($Password){
-            $password = $Password;
+        public function setPassword($Password){
+            $this->password = $Password;
         }
 
-        public static function getPassword(){
-            return $password;
+        public function getPassword(){
+            return $this->password;
         }
 
-        public static function setFname($Fname){
-            $fname = $Fname;
+        public function setFname($Fname){
+            $this->fname = $Fname;
         }
 
-        public static function getFname(){
-            return $fname;
+        public function getFname(){
+            return $this->fname;
         }
 
-        public static function setLname($Lname){
-            $lname = $Lname;
+        public function setLname($Lname){
+            $this->lname = $Lname;
         }
 
-        public static function getLname(){
-            return $lname;
+        public function getLname(){
+            return $this->lname;
         }
 
-        public static function setPropic($Propic){
-            $propic = $Propic;
+        public function setPropic($Propic){
+            $this->propic = $Propic;
         }
 
-        public static function getPropic(){
-            return $propic;
+        public function getPropic(){
+            return $this->propic;
         }
 
-        public static function setEmail($Email){
-            $email = $Email;
+        public function setEmail($Email){
+            $this->email = $Email;
         }
 
-        public static function getEmail(){
-            return $email;
+        public function getEmail(){
+            return $this->email;
         }
 
-        public static function convID($id){
+        public function convID($id){
             $convid = hash('sha256',$id);
             return $convid;
         }
 
-        public static function convPWD($pwd){
+        public function convPWD($pwd){
             $PWD = hash('sha256',$pwd);
             return $PWD;
         }

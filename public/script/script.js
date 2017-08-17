@@ -2,6 +2,8 @@ $(document).ready(function() {
     
     if(window.location.pathname == "/profile.php"){
         fetch();
+    }else if(/peopleProfile.php?/.test(window.location.pathname)){
+        fetchPeoplePosts();
     }
 
     $('#settings').on('click', function(e) {
@@ -63,9 +65,12 @@ $(document).ready(function() {
             if (this.readyState == 4 && this.status == 200) {
                 var Parent = $('#postContainer');
                var res = JSON.parse(this.responseText); //JSON.stringify(this.responseText);
+               res.sort(function(a,b){
+                   console.log(new Date(a.date) > new Date(b.date));
+               });
                 if(res[0].message != null){
                     for(var x = 0; x < res.length; x++){
-                        createPost(res[x]);
+                        createPost(res[x], false);
                     }
                     
                 }else{
@@ -79,15 +84,47 @@ $(document).ready(function() {
         xmlhttp.open("GET", "controller/PostController.php?type=0", true);
         xmlhttp.send();
         //alert(Post);
-    };
+    }
+    
+    
+    function fetchPeoplePosts(){
+        var xmlhttp = new XMLHttpRequest();
 
-    function createPost(res) {
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var Parent = $('#postContainer');
+                var res = JSON.parse(this.responseText); 
+                res.sort(function(a,b){
+                   console.log(new Date(a.date) > new Date(b.date));
+               });
+                if(res[0].message != null){
+                    for(var x = 0; x < res.length; x++){
+                        createPost(res[x], true);
+                    }
+                    
+                }else{
+                    alert(res[0].body);
+                }
+                //alert(this.responseText);
+                //$('.ToPost-Container form textarea').val(res[0].message);
+            }
+
+        }
+        xmlhttp.open("GET", "controller/PostController.php?type=2", true);
+        xmlhttp.send();
+        //alert(Post);
+    }
+
+    function createPost(res, pchk) {
         var Parent = $('#postContainer');
         var delBtn = $("<button id=\"delPost\"><i class=\"material-icons\">delete</i></button>");
         var editBtn = $("<button id=\"editPost\"><i class=\"material-icons\">mode_edit</i></button>");
         var Post = $("<div class=\"Post\"></div>");
-        Post.append(delBtn);
-        Post.append(editBtn);
+        if(!pchk){
+            Post.append(delBtn);
+            Post.append(editBtn);
+        }
+        
         delBtn.click(function(e){
             e.preventDefault();
            var parent = $(this).parent();
@@ -131,17 +168,19 @@ $(document).ready(function() {
                 var parent = $(this).parent();
                 var btn = $(this);
                 var xmlhttp = new XMLHttpRequest();
-                var body =  parent.children('.EditPost').val().replace(/\n/g, "@@@");;
+                var body =  parent.children('.EditPost').val().replace(/\n/g, "@@@");
+                body = body.replace(/'/g,"\''");
                 //alert(body);
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         var res = JSON.parse(this.responseText); //JSON.stringify(this.responseText);
-                        if (res.message != null) {
+                        if(res.message != null) {
                             oldPost.children().remove();
                             //console.log(oldPost.innerHTML);
                             parent.children('.EditPost').remove();
                             btn.remove();
                             body = body.replace(/@@@/g, "\n");
+                            body = body.replace(/''/g,"\'");
                             body = body.split('\n');
                             for (var x = 0; x < body.length; x++) {
                                 if (body[x] == "") {
@@ -184,9 +223,12 @@ $(document).ready(function() {
         //name.text(res.body)
         var Body = "" + res.body + "";
         var body = Body.replace(/@@@/g, "\n");
+         body = body.replace(/''/g,"\'");
         body = body.split('\n');
         Body = $('<div style=\"width:100%; height: auto\"></div>');
         name.text(res.name);
+        DATE = new Date(res.date);
+        //alert(DATE);
         date.text(res.date);
         face.attr("src", res.face);
         Post.attr("data-id", res.post_id);
@@ -223,13 +265,15 @@ $(document).ready(function() {
         }*/else{
             var Pic = "";
             Post = Post.replace(/\n/g, "@@@");
+            Post = Post.replace(/'/g,"\''");
+            //alert(Post);
     
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     var Parent = $('#postContainer');
                     var res = JSON.parse(this.responseText); //JSON.stringify(this.responseText);
                     if (res.message != null) {
-                        createPost(res);
+                        createPost(res, false);
                     } else {
                         alert(res.body);
                     }
@@ -419,5 +463,27 @@ $(document).ready(function() {
     ////////////////////////////////////////// register validation ///////////////////////////////////////
 
     ////////////////////////////////////////// register/login ////////////////////////////////////////////
+    
+    //////////////////////////////////////////// Add Friend //////////////////////////////////////////////
+    $('#addFriend').on('click', function(e){
+            var parent = $(this).parent();
+            var fid = parent.attr("data-id");
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                var data = this.responseText;
+                if (data != null) {
+                   parent.children('button').remove();
+                   parent.append($("<label>Pending <i class=\"material-icons\">watch_later</i></label>"));
+                } else {
+                    alert("failed");
+                }
+                }
+
+            }
+            xmlhttp.open("POST", "/controller/AddFriend.php?fid=" + fid + "&type=add");
+            xmlhttp.send();
+    });
+    //////////////////////////////////////////// Add Friend //////////////////////////////////////////////
 
 });

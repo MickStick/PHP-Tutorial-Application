@@ -1,7 +1,7 @@
 <div class="FormContainer" id="reg">
     <label id="goreg"> Register </label>
     <label id="golog"> Login </label>
-    <form class="loginForm" method = "POST" action="/signup">
+    <form class="loginForm" method = "POST" action="/signup.php">
 
     <table>
         <tr><td><label for="uname">Username</label></td><td><input id="uname" type="text" name="uname" placeholder="Username"/></td></tr>
