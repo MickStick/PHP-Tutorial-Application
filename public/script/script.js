@@ -11,19 +11,20 @@ $(document).ready(function() {
         $('#settings-list').animate({ height: 'toggle' }, 250);
 
     });
-     $('#hsearch').emojiPicker({
-          height: '300px',
-          width:  '450px'
-    });
-    
-    $('#hsearch').emojiPicker('toggle');
     
     $('.ToPost-Container form textarea').emojiPicker({
           height: '300px',
-          width:  '450px'
+          width:  '450px',
+          iconBackgroundColor: "transparent"
     });
     
-    $('.ToPost-Container form textarea').emojiPicker('toggle');
+    $('.ToPost-Container form h6').click(function(e){
+        e.preventDefault();
+        alert("meow");
+        $('.ToPost-Container form textarea').emojiPicker('toggle');
+    });
+    
+    //$('.ToPost-Container form textarea').emojiPicker('toggle');
 
     function openEdit() {
         $('html').css({ "overflow-y": "hidden" });

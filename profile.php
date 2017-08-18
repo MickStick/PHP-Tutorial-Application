@@ -31,6 +31,7 @@ if($_SESSION["propic"] == "" || $_SESSION["propic"] == null){
                     <form method = "POST" action="profile.php" enctype="multipart/form-data">
                         <textarea rows="20"name="post" placeholder="What's going on in your brain right now?"></textarea>
                         <button name="makePost" type="submit"><i class="material-icons">add</i></button>
+                        <h6><i class="material-icons">insert_emoticon</i></h6>
                         <label for="photo_posts"><i class="material-icons">add_a_photo</i></label>
                         <input type="file" id="photo_posts" accept=".png,.jpg," />
                     </form>
