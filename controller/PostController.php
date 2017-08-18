@@ -32,10 +32,19 @@
                         $id = $_SESSION["id"];
                         $fname = $_SESSION["fname"];
                         $lname = $_SESSION["lname"];
-                        $body = $_REQUEST["post"];
-                        $pic = $_REQUEST["pic"];
-                        date_default_timezone_set("America/New_York");
-                        $post_date = date("m.d.Y H:i:s");
+                        $body = $_POST["body"];//$_REQUEST["post"];
+                        $dir = "../public/static/";
+	                $file = $dir.basename($_FILES["file"]["name"]);
+	                $Type = "";
+	                $pic = "";
+	                if(isset($_FILES["file"])){
+	                        $Type = pathinfo($file,PATHINFO_EXTENSION);
+	                        $pic = $dir .$post_id. "_".$_SESSION["username"].".".$Type;   
+	                }else{
+	                        $pic = "";   
+	                }
+                        date_default_timezone_set("UTC");
+                        $post_date = date("Y-m-d H:i:s");
                         $sql = "INSERT INTO posts (post_id,id, fname, lname, body, picture, post_date) VALUES ('$post_id','$id', '$fname','$lname', '$body', '$pic','$post_date')";
                         if(!$conn->query($sql)){
                                 $Post = new \stdClass();
@@ -46,6 +55,16 @@
                                 $conn->close;
                         }else{
                                 $Post = new \stdClass();
+                                if(isset($_FILES["file"])){
+                                        if (move_uploaded_file($_FILES["file"]["tmp_name"], $pic)) {
+                                               $Post->pic = $pic;
+                                        }else{
+                                            $Post->pic = "";     
+                                        }
+                                }else{
+                                      $Post->pic = "";  
+                                }
+                               
                                 $Post->post_id = $post_id;
                                 $Post->body = $body;//$_REQUEST["post"];
                                 $Post->name = $_SESSION["fname"]. " " . $_SESSION["lname"];
@@ -54,6 +73,7 @@
                                 $Post->message = "Saved";
                                 $Post->posts = $_SESSION["posts"];
                                 $Post->post = $_SESSION["post"];
+                                	
                 
                                 $post = json_encode($Post);
                                 $post_num = $_SESSION["posts"];
@@ -62,6 +82,7 @@
                                         $conn->close;     
                                 }
                                 
+                                
                         }  
                 }
                 
@@ -69,7 +90,7 @@
         }else if($_SERVER["REQUEST_METHOD"] == "GET"){
                 if($_REQUEST["type"] == 0){
                         $id = $_SESSION["id"];
-                        $results = $conn->query("SELECT * FROM posts WHERE id = '$id'");
+                        $results = $conn->query("SELECT * FROM posts WHERE id = '$id' ORDER BY post_date ASC");
                         
                         $post = array();
                         $x = 0;
@@ -81,7 +102,8 @@
                                         $Post->name = $res["fname"] . " " . $res["lname"];
                                         $Post->face = $_SESSION["propic"];
                                         $Post->date = $res["post_date"];
-                                        $Post->message = "Found";  
+                                        $Post->pic = $res["picture"];
+                                        $Post->message = "Found"; 
                                         $post[$x] = $Post; 
                                         $x += 1;                         
                                 }
@@ -98,7 +120,7 @@
                         }
                 }else if($_REQUEST["type"] == 2){
                         $id = $_SESSION["pid"];
-                        $results = $conn->query("SELECT * FROM posts WHERE id = '$id'");
+                        $results = $conn->query("SELECT * FROM posts WHERE id = '$id' ORDER BY post_date ASC");
                         $propic = $conn->query("SELECT * FROM users WHERE id = '$id'");
                         $pic = $propic->fetch_assoc();
                         $post = array();
@@ -111,6 +133,7 @@
                                         $Post->name = $res["fname"] . " " . $res["lname"];
                                         $Post->face = $pic["propic"];
                                         $Post->date = $res["post_date"];
+                                        $Post->pic = $res["picture"];
                                         $Post->message = "Found";  
                                         $post[$x] = $Post; 
                                         $x += 1;                         

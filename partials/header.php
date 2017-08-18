@@ -27,7 +27,7 @@
 			<span><img id="edit-pic" alt=" " /></span>
 			<label for="file">
 				Edit Profile Picture
-				<input name="file" type="file" accept=".png,.jpg"/>
+				<input name="file" type="file" accept="image/png,image/jpg"/>
 			</label>
 			<table>
 				<tr><td><label for="">First Name</label></td></tr>

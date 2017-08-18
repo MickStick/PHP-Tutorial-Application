@@ -28,9 +28,11 @@ if($_SESSION["propic"] == "" || $_SESSION["propic"] == null){
             </div>
             <div class="profile-partition" id="middle-partition">
                 <div class="ToPost-Container">
-                    <form method = "POST" action="profile.php">
+                    <form method = "POST" action="profile.php" enctype="multipart/form-data">
                         <textarea rows="20"name="post" placeholder="What's going on in your brain right now?"></textarea>
                         <button name="makePost" type="submit"><i class="material-icons">add</i></button>
+                        <label for="photo_posts"><i class="material-icons">add_a_photo</i></label>
+                        <input type="file" id="photo_posts" accept=".png,.jpg," />
                     </form>
                 </div>
                 <hr>

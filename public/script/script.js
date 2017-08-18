@@ -11,6 +11,19 @@ $(document).ready(function() {
         $('#settings-list').animate({ height: 'toggle' }, 250);
 
     });
+     $('#hsearch').emojiPicker({
+          height: '300px',
+          width:  '450px'
+    });
+    
+    $('#hsearch').emojiPicker('toggle');
+    
+    $('.ToPost-Container form textarea').emojiPicker({
+          height: '300px',
+          width:  '450px'
+    });
+    
+    $('.ToPost-Container form textarea').emojiPicker('toggle');
 
     function openEdit() {
         $('html').css({ "overflow-y": "hidden" });
@@ -46,6 +59,7 @@ $(document).ready(function() {
             $('#edit-pic').attr("alt", " ");
         } else {
             alert("Invalid extension: You may only upload \".png\" or \".jpg\" or \".JPG\" or \".jpeg\" files");
+            $(this).contents(null);
         }
     });
 
@@ -65,9 +79,6 @@ $(document).ready(function() {
             if (this.readyState == 4 && this.status == 200) {
                 var Parent = $('#postContainer');
                var res = JSON.parse(this.responseText); //JSON.stringify(this.responseText);
-               res.sort(function(a,b){
-                   console.log(new Date(a.date) > new Date(b.date));
-               });
                 if(res[0].message != null){
                     for(var x = 0; x < res.length; x++){
                         createPost(res[x], false);
@@ -94,9 +105,9 @@ $(document).ready(function() {
             if (this.readyState == 4 && this.status == 200) {
                 var Parent = $('#postContainer');
                 var res = JSON.parse(this.responseText); 
-                res.sort(function(a,b){
-                   console.log(new Date(a.date) > new Date(b.date));
-               });
+            //     res.sort(function(a,b){
+            //       console.log(new Date(a.date) > new Date(b.date));
+            //   });
                 if(res[0].message != null){
                     for(var x = 0; x < res.length; x++){
                         createPost(res[x], true);
@@ -149,7 +160,7 @@ $(document).ready(function() {
             $(this).attr("disabled","true");
             var parent = $(this).parent();
             var oldPost = parent.children('div');
-            parent.children('div').remove();
+            
             var editPost = $("<textarea class=\"EditPost\"></textarea>");
             for(var x = 0; x < oldPost.children('p').length; x++){
                 if(x == 0){
@@ -160,9 +171,10 @@ $(document).ready(function() {
                 
             }
             
-            parent.append(editPost);
+            editPost.insertAfter(parent.children('div'));
+            parent.children('div').remove();
             var upBtn = $("<button id=\"upPost\"><i class=\"material-icons\">mode_edit</i></button>");
-            parent.append(upBtn);
+            upBtn.insertAfter(parent.children('.EditPost'));
             upBtn.click(function(e){
                 e.preventDefault();
                 var parent = $(this).parent();
@@ -177,7 +189,7 @@ $(document).ready(function() {
                         if(res.message != null) {
                             oldPost.children().remove();
                             //console.log(oldPost.innerHTML);
-                            parent.children('.EditPost').remove();
+                            
                             btn.remove();
                             body = body.replace(/@@@/g, "\n");
                             body = body.replace(/''/g,"\'");
@@ -197,7 +209,8 @@ $(document).ready(function() {
                     
                     
                             }
-                            parent.append(oldPost);
+                            oldPost.insertAfter(parent.children('.EditPost'));
+                            parent.children('.EditPost').remove();
                             parent.children('#editPost').removeAttr("disabled");
                             //alert(res.message);
                         } else {
@@ -252,22 +265,55 @@ $(document).ready(function() {
 
         }
         Post.append(Body);
+        if(/\S+/.test(res.pic)){
+            var pic = $("<img src=\""+res.pic+"\"/>");
+            Post.append(pic);
+        }
         Parent.prepend(Post);
     }
     $('.ToPost-Container form button').on('click', function(e) {
         e.preventDefault();
         var xmlhttp = new XMLHttpRequest();
         var Post = $('.ToPost-Container form textarea').val();
+        
         if(Post == "" || Post == null || !/\S+/.test(Post)){
+            if($('#photo_posts')[0].files[0] != null){
+                Post = Post.replace(/\n/g, "@@@");
+                Post = Post.replace(/'/g,"\''");
+                //alert(Post);
+                //$('.ToPost-Container form textarea').val($('.ToPost-Container form textarea').val().replace(/\n/g,"@@@"));
+                var formData = new FormData();
+                
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var Parent = $('#postContainer');
+                        var res = JSON.parse(this.responseText); //JSON.stringify(this.responseText);
+                        if (res.message != null) {
+                            createPost(res, false);
+                        } else {
+                            alert(res.body);
+                        }
+                        //alert(this.responseText);
+        
+                        $('.ToPost-Container form textarea').val("");
+                    }
+        
+                };
+                xmlhttp.open("POST", "controller/PostController.php", true);
+                formData.append('body', Post);
+                formData.append('file',$('#photo_posts')[0].files[0]);
+                xmlhttp.send(formData); 
+            }
             
-        }/*else if(!/^[0-9a-zA-Z]*\s[0-9a-zA-Z ]*$/.test(Post)){
+        }/*else if(){
             alert(Post);
         }*/else{
-            var Pic = "";
             Post = Post.replace(/\n/g, "@@@");
             Post = Post.replace(/'/g,"\''");
             //alert(Post);
-    
+            //$('.ToPost-Container form textarea').val($('.ToPost-Container form textarea').val().replace(/\n/g,"@@@"));
+            var formData = new FormData();
+            
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     var Parent = $('#postContainer');
@@ -283,10 +329,33 @@ $(document).ready(function() {
                 }
     
             };
-            xmlhttp.open("POST", "controller/PostController.php?post=" + Post + "&pic=" + Pic, true);
-            xmlhttp.send();   
+            xmlhttp.open("POST", "controller/PostController.php", true);
+            formData.append('body', Post);
+            if($('#photo_posts')[0].files[0] != null){
+                formData.append('file',$('#photo_posts')[0].files[0]);
+            }
+            xmlhttp.send(formData);   
         }
         //alert(Post);
+    });
+    
+     $('#photo_posts').on('change', function() {
+        var filename = $(this).val().replace(/([^\\]*\\)*/, '');
+        var pngExt = /^[A-Za-z0-9\W_]+.png$/;
+        var jpgExt = /^[A-Za-z0-9\W_]+.jpg$/;
+        var JPGExt = /^[A-Za-z0-9\W_]+.JPG$/;
+        var jpegExt = /^[A-Za-z0-9\W_]+.jpeg$/;
+        if (pngExt.test(filename) || jpgExt.test(filename) || JPGExt.test(filename) || jpegExt.test(filename)) {
+            /*PreviewImage(this);
+            $('#edit-pic').attr("alt", filename);*/
+        } else if (this.value == "" || this.value == null) {
+
+           /* $('#edit-pic').attr("src", "");
+            $('#edit-pic').attr("alt", " ");*/
+        } else {
+            alert("Invalid extension: You may only upload \".png\" or \".jpg\" or \".JPG\" or \".jpeg\" files");
+            $(this).contents(null);
+        }
     });
 
     $('#logout').on('click', function(e) {
