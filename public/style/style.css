@@ -636,6 +636,8 @@ header ul li a:focus {
     line-height: 16px;
     font-weight: 600;
     font-size: 16px;
+    display: block;
+    margin: auto;
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 5px 5px 0px 0px;
@@ -671,7 +673,7 @@ header ul li a:focus {
     outline: none;
 }
 
-.ToPost-Container button {
+.ToPost-Container button{
     /* position: relative; */
     float: right;
     margin-top: 3px;
@@ -706,7 +708,7 @@ header ul li a:focus {
     /* position: relative; */
     float: right;
     margin-top: 3px;
-    margin-right: 7px;
+    margin-right: 7px;/*37px for onesignal emoji*/
     width: 25px;
     height: 25px;
     font-weight: 600;
@@ -733,6 +735,54 @@ header ul li a:focus {
 
 .ToPost-Container label:focus {
     outline: none;
+}
+
+.emojiPicker{
+    margin-top: 35px !important;
+}
+
+.emoji-menu{
+   /* position: relative !important;*/
+    right: initial !important;
+    float: right !important;
+    clear: clear !important;
+    margin-top: 35px !important;
+}
+.emoji-wysiwyg-editor{
+    padding: 0px 4px !important;
+    line-height: 22px !important;
+    font-weight: 600 !important;
+    font-size: 18px !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 5px 5px 0px 0px !important;
+}
+
+.emoji-picker-icon{
+    position: relative;
+    right: 0% !important;
+    left: 100%;
+    font-size: 23px;
+    width: 23px !important;
+    height: 23px !important;
+    margin-left: -62.5px;
+    padding-top: 2px !important;
+    padding-left: 2.5px !important;
+    top: 2.5px !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    color: rgba(255, 255, 255, 1) !important;
+    border: none !important;
+    border-radius: 15px !important;
+    cursor: pointer !important;
+    transition: background-color 300ms, color 300ms !important;
+}
+
+.emoji-picker-icon:hover{
+    background-color: transparent !important;
+    color: rgba(0, 0, 0, 0.3) !important;
+}
+.emoji-picker-icon:focus{
+    outline: none !important;
 }
 
 .ToPost-Container h6 {
@@ -889,6 +939,7 @@ header ul li a:focus {
     height: 600px;
     display: block;
     margin: auto;
+    margin-top: 2mm;
     text-align: center;
 }
 

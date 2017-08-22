@@ -15,12 +15,12 @@ $(document).ready(function() {
     $('.ToPost-Container form textarea').emojiPicker({
           height: '300px',
           width:  '450px',
-          iconBackgroundColor: "transparent"
+          iconBackgroundColor: "transparent",
+          button: false
     });
     
-    $('.ToPost-Container form h6').click(function(e){
+    $('#emojiBtn').click(function(e){
         e.preventDefault();
-        alert("meow");
         $('.ToPost-Container form textarea').emojiPicker('toggle');
     });
     
@@ -176,6 +176,7 @@ $(document).ready(function() {
             parent.children('div').remove();
             var upBtn = $("<button id=\"upPost\"><i class=\"material-icons\">mode_edit</i></button>");
             upBtn.insertAfter(parent.children('.EditPost'));
+            $("<hr id=\"edit-hr\" />").insertAfter(upBtn);
             upBtn.click(function(e){
                 e.preventDefault();
                 var parent = $(this).parent();
@@ -213,6 +214,7 @@ $(document).ready(function() {
                             oldPost.insertAfter(parent.children('.EditPost'));
                             parent.children('.EditPost').remove();
                             parent.children('#editPost').removeAttr("disabled");
+                            parent.children('edit-hr').remove();
                             //alert(res.message);
                         } else {
                             alert(res.body);
@@ -265,14 +267,17 @@ $(document).ready(function() {
 
 
         }
-        Post.append(Body);
+        if(/\S+/.test(Body.text())){
+            Post.append(Body);
+        }
+        
         if(/\S+/.test(res.pic)){
             var pic = $("<img src=\""+res.pic+"\"/>");
             Post.append(pic);
         }
         Parent.prepend(Post);
     }
-    $('.ToPost-Container form button').on('click', function(e) {
+    $('#makePost').on('click', function(e) {
         e.preventDefault();
         var xmlhttp = new XMLHttpRequest();
         var Post = $('.ToPost-Container form textarea').val();
@@ -297,6 +302,11 @@ $(document).ready(function() {
                         //alert(this.responseText);
         
                         $('.ToPost-Container form textarea').val("");
+                        $(this).parent().childrne('div').html('');
+                        $(this).parent().childrne('div').text('');
+                        $(this).parent().childrne('div').val('');
+                        document.getElementByClassName("emoji-wysiwyg-editor").innerHTML = "";
+                        document.getElementByClassName("emoji-wysiwyg-editor").value = "";
                     }
         
                 };

@@ -2,7 +2,7 @@
     <img src="../../public/static/logo.png" alt="Company Logo">
     <h1><a href="home.php">PHP Test</a></h1>
     <form id="hsearchForm" medthod="GET" action="findPeople.php" enctype="multipart/form-data">
-		<input type="text" name="hsearch" id="hsearch"/>
+		<input type="text" name="hsearch" id="hsearch" />
 		<button> <i class="material-icons">search</i></button>
     </form>
    
