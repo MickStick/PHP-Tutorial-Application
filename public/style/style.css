@@ -374,6 +374,58 @@ header ul li a:focus {
 	outline: none;
 }
 
+/*/////////////////////////////////////////// Footer Styles //////////////////////////////// top///*/
+
+footer{
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    bottom: 0%;
+    background: rgb(255,255,255);
+    display: none;
+}
+
+footer ul{
+    list-style-type: none;
+    float: left;
+    width: 100%;
+    height: 100%;
+}
+
+footer ul li{
+    display: inline;
+    float: left;
+    height: 100%;
+    width: 20%;
+}
+
+footer ul li a{
+    width: 100%;
+    height: 100%;
+}
+
+footer ul li:hover{
+    background: rgba(140,140,140,0.7);
+    color: rgba(150, 180, 170, 0.7);
+}
+footer ul li:active{
+    background: rgba(140,140,140,0.5);
+    color: rgba(150, 180, 170, 0.7);
+}
+footer ul li:focus{
+    outline: none;
+}
+
+footer ul li a i{
+    font-size: 40px;
+    width: 100%;
+    height: 100%;
+    color: rgba(0,0,0,1);
+    text-align: center;
+}
+
+/*/////////////////////////////////////////// Footer Styles //////////////////////////////// top///*/
+
 
 
 

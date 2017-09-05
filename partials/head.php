@@ -19,7 +19,7 @@
 <meta name="author" content="Mikhail Rene Shaw">
 <meta name="description" content="Application for testing and practicing PHP">
 <meta name="keywords" content="HTML,CSS,JavaScript,PHP,social meadia, mikhail shaw, Mikhail Shaw, phptutorial01, shaw phptutorial">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <link rel="shortcut icon" href="favicon.png">
 <link rel="stylesheet" type="text/css" href="public/style/jquery.emojipicker.css">
 <link rel="stylesheet" type="text/css" href="public/style/jquery.emojipicker.tw.css">

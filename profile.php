@@ -63,4 +63,7 @@ if($_SESSION["propic"] == "" || $_SESSION["propic"] == null){
             </p>-->
         </main>
     </body>
+<footer>
+    <?php include "partials/footer.php"; ?>
+</footer>
 </html>

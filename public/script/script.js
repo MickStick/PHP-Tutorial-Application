@@ -12,6 +12,12 @@ $(document).ready(function() {
 
     });
     
+    $('#notifs').on('click', function(e) {
+        e.preventDefault();
+        $('.Notification-Wrapper').animate({ height: 'toggle' }, 250);
+
+    });
+    
     $('.ToPost-Container form textarea').emojiPicker({
           height: '300px',
           width:  '450px',

@@ -9,9 +9,14 @@
     <ul id="nav-list">
         <li title="Home"><a href=""><i class="material-icons">public</i></a></li>
         <li title="Messages"><a href=""><i class="material-icons">message</i></a></li>
-        <li title="Notifs"><a href=""><i class="material-icons">notifications</i></a></li>
+        <li title="Notifs"><a href="" id="notifs"><i class="material-icons">notifications</i></a></li>
         <li title="Settings"><a id="settings"><i class="material-icons">settings</i></a></li>
     </ul>
+    <div class="Notification-Wrapper" style="position: absolute; right: 0%; top: 125px; display: none; width: 500px; border: 1px solid;">
+    	<?php
+    		include "notifications.php";
+    	?>
+    </div>
 
     <a href="profile.php" id="name" title="You"><?php echo $_SESSION["fname"]. " " .$_SESSION["lname"]; ?></a>
 <ul id="settings-list" hidden>

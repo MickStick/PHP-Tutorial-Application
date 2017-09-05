@@ -90,6 +90,9 @@ $title = $Person->getFname(). " " .$Person->getLname();
             </p>-->
         </main>
     </body>
+    <footer>
+    <?php include "partials/footer.php"; ?>
+    </footer>
 </html>
 
 

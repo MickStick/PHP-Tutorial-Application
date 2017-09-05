@@ -24,7 +24,7 @@ function convPWD($pwd){
             $pwd = convPWD($pword);
             //print "db password: " .$user_pwd["password"] . ", inputted password: " .$pwd . ", raw password: " .$pword;
             if($user_pwd["password"] == $pwd){
-                $notifs =  $conn->query("SELECT * FROM notifications WHERE id = '$id'");
+                $notifs =  $conn->query("SELECT * FROM notifications WHERE id = '$id' AND status= 'null'");
                 $_SESSION["status"] = "logged in";
                 $_SESSION["log"] = true;
                 $_SESSION["message"] = "User Found";
