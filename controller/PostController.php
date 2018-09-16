@@ -26,6 +26,11 @@
                                 echo  $post; 
                                 $conn->close;
                         }   
+                }else if(isset($_REQUEST["cid"])){
+                        $post_id = $_REQUEST["pid"];
+                        $comment_id = $_REQUEST["cid"];
+                }else if(isset($_REQUEST["lid"])){
+                        
                 }else{
                         $post_id = ($_SESSION["id"]  *  pow(10,(strlen($_SESSION["posts"] + 1)))) + ($_SESSION["posts"] + 1);
                         $_SESSION["posts"]++;

@@ -31,6 +31,7 @@ if($_SESSION["propic"] == "" || $_SESSION["propic"] == null){
                     <form method = "POST" action="profile.php" enctype="multipart/form-data">
                         <textarea rows="20" name="post" 
                         placeholder="What's going on in your brain right now?" 
+                        id="postTextContent"
                         ></textarea><!-- data-emojiable="true"-->
                         <button name="makePost" type="submit" id="makePost"><i class="material-icons">add</i></button>
                         <h6 id="emojiBtn"><i class="material-icons">insert_emoticon</i></h6>

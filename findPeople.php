@@ -3,15 +3,15 @@
     $title = "Find People";
     include 'model/DBConfig.php';
     include 'model/SResults.php';
-    $search = $conn->escape_string($_GET["hsearch"]);
+    $search = strtolower($conn->escape_string($_GET["hsearch"]));
     $x = 0;
     $People = new SResults();
-    $names = $conn->query("SELECT id,fname,lname,propic FROM users");
+    $names = $conn->query("SELECT id,username,fname,lname, email, propic FROM users");
     if($names->num_rows > 0){
         
         
         while($name = $names->fetch_assoc()){
-            if($name["fname"]. " " .$name["lname"] == $search){
+            if(strtolower($name["fname"]). " " .strtolower($name["lname"]) == $search || strtolower($name["fname"]) == $search || strtolower($name["lname"]) == $search || strtolower($name["username"]) == $search || strtolower($name["email"]) == $search){
                 $People->setID($x,$name["id"]);
                 $People->setFname($x,$name["fname"]);
                 $People->setLname($x,$name["lname"]);
@@ -53,7 +53,11 @@
                         for($y = 0; $y < sizeof($People->id); $y++){?>
                             <div id="foundPerson" data-id="<?php include "model/Users.php"; echo Users::ConvPWD($People->getID($y));?>">
                                 <img src="<?php echo $People->getProPic($y)?>"></img>
-                                <label> <a href="peopleProfile.php?id=<?php echo Users::ConvPWD($People->getID($y));?>"><?php echo $People->getFname($y)." ".$People->getLname($y);?></a></label>
+                                <label> <a <?php if($People->getFname($y) == "Nobody" || $People->getFname($y) == $_SESSION["fname"]){
+                                        echo 'href="profile.php"';
+                                    } else {
+                                        echo 'href="peopleProfile.php?id='.Users::ConvPWD($People->getID($y)).'"';
+                                    } ?> ><?php echo $People->getFname($y)." ".$People->getLname($y);?></a></label>
                                 <?php if($People->id[$y] == 1 || $People->getID($y) == $_SESSION["id"]){
                                     
                                 }else{?>
@@ -75,4 +79,4 @@
     <footer>
         <?php include "partials/footer.php"; ?>
     </footer>
-</html>
+</html> 
